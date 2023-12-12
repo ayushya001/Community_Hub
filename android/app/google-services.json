@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43077189909",
+    "project_id": "communityhub-4193b",
+    "storage_bucket": "communityhub-4193b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43077189909:android:a8a8cada188a6f33db691c",
+        "android_client_info": {
+          "package_name": "com.example.communityhubb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt0CXb_dPESDuJX8JDyDux3bt3FUvxkkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
