@@ -4,10 +4,12 @@ import 'package:communityhubb/Models/QuestionModel.dart';
 import 'package:communityhubb/Models/UserModels.dart';
 import 'package:communityhubb/Screens/Answer.dart';
 import 'package:communityhubb/Utils/DateTimeutils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
+import '../FirebaseServices/FirebaseServices.dart';
 
 
 class appWidget extends StatefulWidget {
@@ -23,13 +25,15 @@ class _appWidgetState extends State<appWidget> {
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context).size;
+    // FirebaseAuth auth = FirebaseAuth.instance.currentUser;
+     final String? userId = firebaseServices.currentUser?.uid;
     return Padding(
       padding: EdgeInsets.only(top: mq.height*0.01,bottom: mq.height*0.01),
-      child: widget.questions.Type == "image" ? withimage() : withoutimage(),
+      child: widget.questions.Type == "image" ? withimage(userId!) : withoutimage(userId!),
 
     );
   }
-  Widget withoutimage(){
+  Widget withoutimage(String userid){
     return Container(
 
 
@@ -129,18 +133,17 @@ class _appWidgetState extends State<appWidget> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      child: Flexible(
-                        child: AutoSizeText(
-                          widget.questions.Question,
-                          style: GoogleFonts.roboto(
-                            // textStyle: Theme.of(context).textTheme.displayLarge,
-                            fontSize: 22,
+                      // yaha sai flexible widget ko remove kiya hai
+                      child: AutoSizeText(
+                        widget.questions.Question,
+                        style: GoogleFonts.roboto(
+                          // textStyle: Theme.of(context).textTheme.displayLarge,
+                          fontSize: 22,
 
-                            fontWeight: FontWeight.w400,
-                            // fontStyle: FontStyle.italic,
-                          ),
-
+                          fontWeight: FontWeight.w400,
+                          // fontStyle: FontStyle.italic,
                         ),
+
                       ),
                     ),
                   ),
@@ -181,11 +184,19 @@ class _appWidgetState extends State<appWidget> {
 
             ),
             child: Padding(
-              padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.06),
+              padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.06,left: MediaQuery.of(context).size.width*0.06),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
+                // mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  if (widget.questions.By == userid)
+                    InkWell(
+                      onTap: () {
+                        firebaseServices.deleteQuestion(widget.questions.QuestionId);
+                      },
+                      child: Icon(Ionicons.trash_bin, color: Colors.redAccent),
+                    ),
+                  Spacer(),
                   InkWell(
                       onTap: (){
                         Navigator.of(context).push(
@@ -194,7 +205,7 @@ class _appWidgetState extends State<appWidget> {
                           ),
                         );
                       },
-                      child: Icon(Ionicons.pencil,color: Colors.black,)),
+                      child: Icon(Ionicons.pencil,color: Colors.blueAccent,)),
                   // Padding(
                   //   padding: EdgeInsets.only(left: mq.width*0.03),
                   //   child: Icon(Icons.share,color: Colors.black,),
@@ -211,7 +222,7 @@ class _appWidgetState extends State<appWidget> {
 
     );
   }
-  Widget withimage(){
+  Widget withimage(String userid){
     return Container(
 
 
@@ -311,18 +322,17 @@ class _appWidgetState extends State<appWidget> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      child: Flexible(
-                        child: AutoSizeText(
-                          widget.questions.Question,
-                          style: GoogleFonts.roboto(
-                            // textStyle: Theme.of(context).textTheme.displayLarge,
-                            fontSize: 22,
+                      //yaha sai bhi flexible widget remove hoa hai
+                      child: AutoSizeText(
+                        widget.questions.Question,
+                        style: GoogleFonts.roboto(
+                          // textStyle: Theme.of(context).textTheme.displayLarge,
+                          fontSize: 22,
 
-                            fontWeight: FontWeight.w400,
-                            // fontStyle: FontStyle.italic,
-                          ),
-
+                          fontWeight: FontWeight.w400,
+                          // fontStyle: FontStyle.italic,
                         ),
+
                       ),
                     ),
                   ),

@@ -22,9 +22,11 @@ class ProfileDetails extends StatefulWidget {
 
 class _ProfileDetailsState extends State<ProfileDetails> {
   TextEditingController _Firstname = TextEditingController();
-  TextEditingController _Enroll = TextEditingController();
+
+  TextEditingController _Profession = TextEditingController();
   FocusNode firstnameFocusNode = FocusNode();
-  FocusNode EnrollFocusNode = FocusNode();
+
+  FocusNode _professionNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +40,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.05,
-                      right: MediaQuery.of(context).size.width*0.1),
-                  child: Text("Skip",style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Appcolors.labelColor
-                  ),),
-                ),
-
-              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.05,
               ),
@@ -78,93 +67,129 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                       return Stack(
                         alignment: Alignment.bottomRight, // To position the plus icon at the bottom-right corner
                         children: [
-                          ClipOval(
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.23,
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(20)),
-                                border: Border.all(
-                                  color: Colors.white54
-                                )
-                              ),
-                              child: imageProvider.imagePath.isNotEmpty
-                                  ? Image.file(File(imageProvider.imagePath), fit: BoxFit.fitWidth)
-                                  : Image.asset("assets/images/usersicon.png", fit: BoxFit.fill),
+
+                            Consumer<ImageProviderClass>(
+                              builder: (context, imageProvider, child) {
+                                return Container(
+                                  height:MediaQuery.of(context).size.height*0.2 ,
+                                  width: MediaQuery.of(context).size.width*0.4,
+
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                                    border: Border.all(
+                                      color: Colors.blue, // Set the border color to blue
+                                      width: 1.0, // Adjust the border width as needed
+                                    ),
+                                  ),
+                                  child: imageProvider.imagePath.isNotEmpty
+                                      ? Image.file(File(imageProvider.imagePath),fit: BoxFit.cover,  )
+                                      : Image.asset("assets/images/usericon2.png",fit: BoxFit.fitWidth, ),
+
+                                );
+                              },
                             ),
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              final imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-                              if(imagefile !=null){
-                                Provider.of<ImageProviderClass>(context, listen: false)
-                                    .setImagePath(imagefile.path);
+                            Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: InkWell(
+                                  onTap: () async {
+                                    final imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-                                print("only image picker");
-                              }
+                                    if(imagefile !=null){
+                                      Provider.of<ImageProviderClass>(context, listen: false)
+                                          .setImagePath(imagefile.path);
+
+                                      print("only image picker");
+                                    }
 
 
-                            },
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    width: 30,
 
-                            child: Container(
-                              height: 40, // Adjust the size as needed
-                              width: 40, // Adjust the size as needed
-                              decoration: BoxDecoration(
-                                color: Colors.blue, // Customize the color of the circle
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.add_a_photo_outlined,
-                                  color: Colors.white, // Customize the icon color
-                                  size: 24, // Customize the icon size
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                        border: Border.all(
+                                          color: Colors.black, // Set the border color to blue
+                                          width: 2.0, // Adjust the border width as needed
+                                        ),
+                                        color: Colors.black,
+                                        shape: BoxShape.rectangle
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.camera,
+                                        size: 28,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ))
+                          ],
+
+
+
+
+
+                          //previous circle
+                          // ClipOval(
+                          //   child: Container(
+                          //     height: MediaQuery.of(context).size.height * 0.23,
+                          //     width: MediaQuery.of(context).size.width * 0.4,
+                          //     decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.all(Radius.circular(20)),
+                          //       border: Border.all(
+                          //         color: Colors.white54
+                          //       )
+                          //     ),
+                          //     child: imageProvider.imagePath.isNotEmpty
+                          //         ? Image.file(File(imageProvider.imagePath), fit: BoxFit.fitWidth)
+                          //         : Image.asset("assets/images/usersicon.png", fit: BoxFit.fill),
+                          //   ),
+                          // ),
+                          // InkWell(
+                          //   onTap: () async {
+                          //     final imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                          //
+                          //     if(imagefile !=null){
+                          //       Provider.of<ImageProviderClass>(context, listen: false)
+                          //           .setImagePath(imagefile.path);
+                          //
+                          //       print("only image picker");
+                          //     }
+                          //
+                          //
+                          //   },
+                          //
+                          //   child: Container(
+                          //     height: 40, // Adjust the size as needed
+                          //     width: 40, // Adjust the size as needed
+                          //     decoration: BoxDecoration(
+                          //       color: Colors.blue, // Customize the color of the circle
+                          //       shape: BoxShape.circle,
+                          //     ),
+                          //     child: Center(
+                          //       child: Icon(
+                          //         Icons.add_a_photo_outlined,
+                          //         color: Colors.white, // Customize the icon color
+                          //         size: 24, // Customize the icon size
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                        //previous circle
                       );
                 },
               ),
 
-                    // Positioned(
-                    //     bottom: 0,
-                    //     right: 0,
-                    //     child: InkWell(
-                    //       onTap: () async {
-                    //         final imagefile = await ImagePicker().pickImage(source: ImageSource.gallery);
-                    //
-                    //         if(imagefile !=null){
-                    //           Provider.of<ImageProviderClass>(context, listen: false)
-                    //               .setImagePath(imagefile.path);
-                    //
-                    //           print("only image picker");
-                    //         }
-                    //
-                    //
-                    //       },
-                    //       child: Container(
-                    //         height: 30,
-                    //         width: 30,
-                    //
-                    //         decoration: BoxDecoration(
-                    //           color: Colors.red,
-                    //           shape: BoxShape.circle
-                    //         ),
-                    //         child: Center(
-                    //           child: Icon(
-                    //             Icons.add,
-                    //             size: 28,
-                    //             color: Colors.white,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ))
+
                   ],
 
                 ),
               ),
+
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.05,
               ),
@@ -175,26 +200,23 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   keyboardType: TextInputType.text,
                   focusNode: firstnameFocusNode,
                   decoration: InputDecoration(
-                      hintText: "Enter your name",
-                      hintStyle: TextStyle(color: Appcolors.hintTextcolor),
-                      labelText: "Name",
-                      labelStyle: TextStyle(color: Appcolors.labelColor),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: Appcolors.borderColorTextformfield)
-                      ),
-
-
-                      focusedBorder: OutlineInputBorder(
+                    hintText: "Enter your Name",
+                    hintStyle: TextStyle(color: Appcolors.hintTextcolor),
+                    labelText: "Name",
+                    labelStyle: TextStyle(color: Appcolors.labelColor),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Appcolors.TextformIconColor), // Color when the TextFormField is in focus
-                      ),
+                        borderSide: BorderSide(color: Appcolors.borderColorTextformfield)
+                    ),
+
+
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: Appcolors.TextformIconColor), // Color when the TextFormField is in focus
+                    ),
 
                   ),
-                  onFieldSubmitted: (val){
-                    Utils.fieldFocusChange(context, firstnameFocusNode, EnrollFocusNode);
-                  },
 
                 ),
               ),
@@ -204,13 +226,13 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               Container(
                 width: MediaQuery.of(context).size.width*0.8,
                 child: TextFormField(
-                  controller: _Enroll,
+                  controller: _Profession,
                   keyboardType: TextInputType.text,
-                  focusNode: EnrollFocusNode,
+                  focusNode: _professionNode,
                   decoration: InputDecoration(
-                    hintText: "Enter your Enrollment No",
+                    hintText: "Enter your Profession",
                     hintStyle: TextStyle(color: Appcolors.hintTextcolor),
-                    labelText: "Enrollment NO",
+                    labelText: "Profession",
                     labelStyle: TextStyle(color: Appcolors.labelColor),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     enabledBorder: OutlineInputBorder(
@@ -265,22 +287,21 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               ),
           RoundButton(title: "Confirm", onpress: () {
             if (_Firstname.text.isEmpty) {
-              Utils.flushBarErrorMessage("First name Cannot be empty", context);
-            } else if (_Enroll.text.isEmpty) {
-              Utils.flushBarErrorMessage("Last name cannot be empty", context);
+              Utils.flushBarErrorMessage("Enter your Name", context);
             }
-            else if (_Enroll.text.length!= 12) {
-              Utils.flushBarErrorMessage("Enter your valid Enrollment no", context);
+            else if (_Profession.text.isEmpty) {
+              Utils.flushBarErrorMessage("Enter your Professions", context);
             }
             else if (imageprovider.imagePath.isEmpty) {
               Utils.flushBarErrorMessage("Please set your profile photo", context);
             }
             else {
-              authprovider.Details(context, _Firstname.text.toString(), _Enroll.text.toString().toUpperCase(),imageprovider.imagePath,_Firstname,_Enroll);
+              authprovider.Details(context, _Firstname.text.toString(), _Profession.text.toString().toUpperCase(),imageprovider.imagePath,_Firstname,_Profession);
               // Navigator.push(context, Routes.generateRoute(RouteSettings(name:  RoutesName.ChooseGender)));
-              print("api hit");
+              authprovider.DetailsForGsigning(context, _Firstname.text.toString(), _Profession.text.toString().toUpperCase(),imageprovider.imagePath,_Firstname,_Profession);
             }
           }),
+
 
               //0902cs211016
 

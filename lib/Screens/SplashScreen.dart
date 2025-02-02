@@ -31,18 +31,18 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          color: Colors.black,
+          color: Colors.white,
           child: Stack(
 
             children: [
               // Image covering the whole screen
               Image.asset(
-                'assets/images/logorjit.png', // Replace with your image asset
+                'assets/images/usericon2.png', // Replace with your image asset
                 fit: BoxFit.fitWidth,
                 height: double.infinity,
                 width: double.infinity,
               ),
-              // Centered Text
+              // Centered Textflutdj
 
               Padding(
                 padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.05),
@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           fontSize: 54.0,
                           fontFamily: 'Cursive',
                           fontWeight: FontWeight.bold,
-                          color: Colors.white
+                          color: Colors.black
                         ),
                         speed: const Duration(milliseconds: 500),
                       ),
@@ -107,6 +107,7 @@ class _SplashScreenState extends State<SplashScreen> {
 void _checkAuthantication(BuildContext context) {
   FirebaseAuth _auth = FirebaseAuth.instance;
   User? user = _auth.currentUser;
+
 
   if (user == null) {
     Navigator.of(context).pushReplacement(

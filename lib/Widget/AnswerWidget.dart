@@ -3,6 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:communityhubb/Models/AnswerModel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ionicons/ionicons.dart';
+import '../FirebaseServices/FirebaseServices.dart';
+
 
 import '../Models/QuestionModel.dart';
 import '../Models/UserModels.dart';
@@ -22,6 +25,8 @@ class _AnswerWidgetState extends State<AnswerWidget> {
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context).size;
+    final String? userId = firebaseServices.currentUser?.uid;
+
     return Padding(
       padding: EdgeInsets.only(top: mq.height*0.01,bottom: mq.height*0.01),
       child: Container(
@@ -126,23 +131,55 @@ class _AnswerWidgetState extends State<AnswerWidget> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        child: Flexible(
-                          child: AutoSizeText(
-                            widget.answers.Answer,
-                            style: GoogleFonts.roboto(
-                              // textStyle: Theme.of(context).textTheme.displayLarge,
-                              fontSize: 18,
 
-                              fontWeight: FontWeight.w400,
-                              // fontStyle: FontStyle.italic,
-                            ),
 
+
+
+                        child: AutoSizeText(
+                          widget.answers.Answer,
+                          style: GoogleFonts.roboto(
+                            // textStyle: Theme.of(context).textTheme.displayLarge,
+                            fontSize: 18,
+
+                            fontWeight: FontWeight.w400,
+                            // fontStyle: FontStyle.italic,
                           ),
+
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: mq.height*0.01,),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey, // specify the border color here
+                          width: 2.0, // specify the border width here
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: mq.height*0.01,),
+                  if (widget.answers.By == userId)
+                  InkWell(
+                    onTap: () {
+                      firebaseServices.deleteAnswer(widget.answers.AnswerId);
+                    },
+                    child: Icon(Ionicons.trash_bin, color: Colors.redAccent),
+                  ),
+                  SizedBox(height: mq.height*0.01,),
+
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey, // specify the border color here
+                          width: 2.0, // specify the border width here
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

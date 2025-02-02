@@ -125,6 +125,7 @@ class _AnswerPageState extends State<AnswerPage> {
                           itemBuilder: (context, index) {
                             final answer = _ans[index];
                             final user = _users[index];
+                            // final question = _users[]
                             return AnswerWidget(answers: answer,user:user,);
                           },
                         );

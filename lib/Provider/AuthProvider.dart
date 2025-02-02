@@ -20,11 +20,18 @@ class Authprovider extends ChangeNotifier {
 
 
   bool _loading = false;
+  bool _loading2 = false; // For the second button
 
   bool get loading => _loading;
+  bool get loading2 => _loading2;
+
 
   setloading(bool value) {
     _loading = value;
+    notifyListeners();
+  }
+  setloading2(bool value) {
+    _loading2 = value;
     notifyListeners();
   }
 
@@ -156,4 +163,59 @@ class Authprovider extends ChangeNotifier {
       setloading(false);
       print("user is null");
     }
-  }}
+  }
+
+
+void DetailsForGsigning(BuildContext context, String firstName, String Lastname,
+    String imagepath,TextEditingController firstnameController,
+    TextEditingController lastnameController) async {
+    setloading(true);
+  final currentUser = FirebaseAuth.instance.currentUser;
+
+  if (currentUser != null) {
+    final uid = currentUser.uid;
+    try {
+
+      print("current user is not null");
+      final uid = currentUser.uid;
+
+      final storageReference = FirebaseStorage.instance
+          .ref()
+          .child('profile_images/${DateTime
+          .now()
+          .millisecondsSinceEpoch}.jpg');
+
+      final uploadTask = await storageReference.putFile(File(imagepath))
+          .whenComplete(() {});
+      final downloadUrl = await uploadTask.ref.getDownloadURL();
+
+      Map<String, dynamic> details = {
+        'image': downloadUrl,
+        'name' : firstName,
+        'enrollmentNo' : Lastname,
+        'uid' : uid,
+      };
+
+      await FirebaseFirestore.instance
+          .collection("Users").doc(uid)
+          .set(details)
+          .then((value) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => Homepage(),
+          ),
+        );
+        setloading(false);
+        firstnameController.clear();
+        lastnameController.clear();
+      });
+
+    } catch (e) {
+      print("Error uploading data: $e");
+      setloading(false);
+    }
+  }else{
+    setloading(false);
+    print("user is null");
+  }
+}}

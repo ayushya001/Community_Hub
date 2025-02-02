@@ -98,7 +98,7 @@ class _postpageState extends State<postpage> {
                       child: Icon(Icons.camera_alt,
                         color: Color(0xFF4169E1)
                         ,size: 32,)),
-                  SizedBox(width: mq.width*0.04,),
+                  SizedBox(width: mq.width*0.02,),
                   InkWell(
                       onTap: (){
                         _imgFromGallery();
@@ -106,7 +106,7 @@ class _postpageState extends State<postpage> {
                       }
                       ,child: Icon(Icons.image,color: Color(0xFF4169E1)
                     ,size: 32,)),
-                  SizedBox(width: mq.width*0.04,),
+                  SizedBox(width: mq.width*0.025,),
                   ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF4169E1)), // Change the color here
@@ -123,7 +123,7 @@ class _postpageState extends State<postpage> {
 
                     },
                     child: Container(
-                      width: mq.width*0.6,
+                      width: mq.width*0.55,
                       height: mq.height*0.05,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10))

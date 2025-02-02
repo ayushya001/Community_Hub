@@ -4,6 +4,7 @@ import 'package:communityhubb/Screens/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../FirebaseServices/FirebaseServices.dart';
 import '../Provider/AuthProvider.dart';
 import '../Utils/AppComponentsColor.dart';
 import '../Utils/general_utils.dart';
@@ -42,6 +43,9 @@ class _SignupState extends State<Signup> {
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
     ConfirmpasswordFocusNode.dispose();
+
+      super.dispose(); // Ensure the superclass dispose method is called
+
   }
 
   @override
@@ -223,6 +227,80 @@ class _SignupState extends State<Signup> {
                     }
 
                   }),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.03,
+                  ),
+
+                  Consumer<Authprovider>(
+                    builder: (context, authprovider, child) {
+                      child: return GestureDetector(
+                        onTap:(){
+                          Provider.of<Authprovider>(context, listen: false).setloading2(true);
+
+                          firebaseServices.SigninUsingGoogle(context);
+                        },
+                        child: authprovider.loading2
+                          ?
+                            Container(
+                              height: MediaQuery.of(context).size.height*0.06,
+                              width: MediaQuery.of(context).size.width*0.8,
+
+                              decoration: BoxDecoration(
+                                // color: Colors.grey, // Set the background color
+                                border: Border.all(
+                                  color: Colors.blue, // Set the border color
+                                  width: 2.0, // Set the border width
+                                ),
+                                borderRadius: BorderRadius.circular(10), // Optional: Add rounded corners
+                              ),
+                              child: Center(
+                                  child: CircularProgressIndicator(backgroundColor: Appcolors.RoundbuttonColor)
+
+                              ),
+                            ):Container(
+                          height: MediaQuery.of(context).size.height*0.06,
+                          width: MediaQuery.of(context).size.width*0.8,
+
+                          decoration: BoxDecoration(
+                            // color: Colors.grey, // Set the background color
+                            border: Border.all(
+                              color: Colors.blue, // Set the border color
+                              width: 2.0, // Set the border width
+                            ),
+                            borderRadius: BorderRadius.circular(10), // Optional: Add rounded corners
+                          ),
+
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center, // Center align the content
+                            children: [
+                              Image.asset(
+                                'assets/images/gmaill.png', // Replace with the path to your image
+                                height: 24.0, // Adjust the image height
+                                width: 24.0, // Adjust the image width
+                              ),
+                              SizedBox(width: 8.0),
+                              SizedBox(width: 8.0), // Add some spacing between icon and text
+                              Text(
+                                'Register with Gmail', // Replace with your desired text
+                                style: TextStyle(
+                                  fontSize: 16.0, // Adjust text size
+                                  color: Colors.black, // Set text color
+                                  fontWeight: FontWeight.normal, // Optional: Bold text
+                                ),
+                              ),
+                            ],
+                          ),
+
+                        ),
+                      );
+                    },
+                  ),
+
+                  //previous elivated button
+
+
+
+
                   Padding(
                     padding:  EdgeInsets.only(top:MediaQuery.of(context).size.height*0.02),
                     child: Row(

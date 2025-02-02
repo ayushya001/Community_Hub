@@ -26,7 +26,7 @@ class RoundButton extends StatelessWidget {
             fixedSize: MaterialStateProperty.all<Size>(Size(MediaQuery.of(context).size.width*0.8,MediaQuery.of(context).size.height*0.06)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15), // Set the circular border radius here
+                borderRadius: BorderRadius.circular(10), // Set the circular border radius here
               ),
             ),
           ),
@@ -50,31 +50,5 @@ class RoundButton extends StatelessWidget {
     );
 
 
-
-
-
-    // return InkWell(
-    //   onTap: () {
-    //     onpress();
-    //   },
-    //   child: Container(
-    //     height: MediaQuery.of(context).size.height * 0.05,
-    //     width: MediaQuery.of(context).size.height * 0.8,
-    //     decoration: BoxDecoration(
-    //       color: Appcolors.RoundbuttonColor,
-    //       borderRadius: BorderRadius.circular(15),
-    //     ),
-    //     child: loading
-    //         ? Center(child: CircularProgressIndicator(backgroundColor: Colors.white))
-    //         : Center(
-    //       child: Text(
-    //         title,
-    //         style: TextStyle(
-    //           color: Colors.white,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

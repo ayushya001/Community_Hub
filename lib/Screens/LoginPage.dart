@@ -82,7 +82,7 @@ class _LoginState extends State<Login> {
                       keyboardType: TextInputType.emailAddress,
                       focusNode: emailFocusNode,
                       decoration: InputDecoration(
-                          hintText: "Enter your email",
+                          hintText: "Enter your email id",
                           hintStyle: TextStyle(color: Appcolors.hintTextcolor),
                           labelText: "Email",
                           labelStyle: TextStyle(color: Appcolors.labelColor),
@@ -176,6 +176,49 @@ class _LoginState extends State<Login> {
                     }
 
                   }),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.03,
+                  ),
+                  GestureDetector(
+                    onTap:(){
+                      print("clicked on the gmail");
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height*0.06,
+                      width: MediaQuery.of(context).size.width*0.8,
+
+                      decoration: BoxDecoration(
+                        // color: Colors.grey, // Set the background color
+                        border: Border.all(
+                          color: Colors.blue, // Set the border color
+                          width: 2.0, // Set the border width
+                        ),
+                        borderRadius: BorderRadius.circular(10), // Optional: Add rounded corners
+                      ),
+
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center, // Center align the content
+                        children: [
+                          Image.asset(
+                            'assets/images/gmaill.png', // Replace with the path to your image
+                            height: 24.0, // Adjust the image height
+                            width: 24.0, // Adjust the image width
+                          ),
+                          SizedBox(width: 8.0),
+                          SizedBox(width: 8.0), // Add some spacing between icon and text
+                          Text(
+                            'Signing with Gmail', // Replace with your desired text
+                            style: TextStyle(
+                              fontSize: 16.0, // Adjust text size
+                              color: Colors.black, // Set text color
+                              fontWeight: FontWeight.normal, // Optional: Bold text
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    ),
+                  ),
                   Padding(
                     padding:  EdgeInsets.only(top:MediaQuery.of(context).size.height*0.02),
                     child: Row(

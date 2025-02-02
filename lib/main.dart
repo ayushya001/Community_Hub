@@ -1,5 +1,6 @@
 import 'package:communityhubb/Screens/Answer.dart';
 import 'package:communityhubb/Screens/ProfileDetails.dart';
+import 'package:communityhubb/Screens/SettingsPage.dart';
 import 'package:communityhubb/Screens/SignupPage.dart';
 import 'package:communityhubb/Screens/homepage.dart';
 import 'package:communityhubb/Screens/postpage.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'Provider/AuthProvider.dart';
 import 'Provider/ChooseGenderProvider.dart';
 import 'Provider/ImagePickerProvider.dart';
+import 'Provider/SearchingProvider.dart';
 import 'Screens/LoginPage.dart';
 import 'Screens/SplashScreen.dart';
 
@@ -29,9 +31,9 @@ class MyApp extends StatelessWidget {
       providers: [
 
         ChangeNotifierProvider(create: (_) =>  Authprovider()),
-
         ChangeNotifierProvider(create: (_) =>  GenderProvidr()),
         ChangeNotifierProvider(create: (_) =>  ImageProviderClass()),
+        ChangeNotifierProvider(create: (context) => SearchingProvider()),
 
         // ChangeNotifierProvider(create: (_) =>  ProfileProvider()),
       ],
